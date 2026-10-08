@@ -1,0 +1,521 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Pratigya Kaushik — Aurora Sky Portfolio</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <style>
+    :root {
+      --bg-deep: #02040a;
+      --bg-mid: #0b1226;
+      --bg-soft: #0f2a3a;
+      --aurora-1: #9ad6ff;
+      --aurora-2: #7df9ff;
+      --aurora-3: #c084fc;
+      --aurora-4: #5a2a6a;
+      --text-main: #eaf4ff;
+      --text-muted: #b9c7e6;
+      --card-bg: rgba(11, 18, 38, 0.55);
+      --card-border: rgba(154, 214, 255, 0.18);
+      --glow: 0 0 24px rgba(125, 249, 255, 0.5),
+              0 0 48px rgba(192, 132, 252, 0.35);
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    html, body {
+      height: 100%;
+      background: radial-gradient(ellipse at bottom, #0f2a3a 0%, #02040a 100%);
+      color: var(--text-main);
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      overflow-x: hidden;
+      cursor: none; /* custom cursor */
+    }
+
+    /* ---------- Aurora Sky Background ---------- */
+    .aurora-sky {
+      position: fixed;
+      inset: 0;
+      z-index: 0;
+      overflow: hidden;
+      pointer-events: none;
+    }
+
+    .aurora-layer {
+      position: absolute;
+      inset: -10%;
+      background:
+        radial-gradient(ellipse at 20% 30%, rgba(125, 249, 255, 0.25), transparent 60%),
+        radial-gradient(ellipse at 80% 20%, rgba(192, 132, 252, 0.25), transparent 60%),
+        radial-gradient(ellipse at 50% 80%, rgba(154, 214, 255, 0.2), transparent 60%);
+      filter: blur(40px);
+      opacity: 0.7;
+      animation: floatAurora 18s ease-in-out infinite;
+    }
+
+    .aurora-layer:nth-child(2) {
+      background:
+        radial-gradient(ellipse at 30% 70%, rgba(192, 132, 252, 0.25), transparent 60%),
+        radial-gradient(ellipse at 70% 40%, rgba(125, 249, 255, 0.2), transparent 60%);
+      animation-duration: 24s;
+      animation-delay: -6s;
+      opacity: 0.55;
+    }
+
+    .aurora-layer:nth-child(3) {
+      background:
+        radial-gradient(ellipse at 60% 20%, rgba(154, 214, 255, 0.2), transparent 60%),
+        radial-gradient(ellipse at 40% 80%, rgba(192, 132, 252, 0.18), transparent 60%);
+      animation-duration: 28s;
+      animation-delay: -10s;
+      opacity: 0.45;
+    }
+
+    @keyframes floatAurora {
+      0%, 100% {
+        transform: translate3d(0, 0, 0) scale(1);
+      }
+      33% {
+        transform: translate3d(-3%, 2%, 0) scale(1.05);
+      }
+      66% {
+        transform: translate3d(2%, -3%, 0) scale(0.98);
+      }
+    }
+
+    /* Stars */
+    .stars, .stars2 {
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      background: transparent;
+      z-index: 1;
+    }
+    .stars {
+      background-image:
+        radial-gradient(2px 2px at 20px 30px, #fff, rgba(255,255,255,0)),
+        radial-gradient(2px 2px at 40px 70px, #fff, rgba(255,255,255,0)),
+        radial-gradient(2px 2px at 50px 160px, #fff, rgba(255,255,255,0)),
+        radial-gradient(2px 2px at 90px 40px, #fff, rgba(255,255,255,0)),
+        radial-gradient(2px 2px at 130px 80px, #fff, rgba(255,255,255,0));
+      background-repeat: repeat;
+      background-size: 220px 220px;
+      opacity: 0.6;
+    }
+    .stars2 {
+      background-image:
+        radial-gradient(1.5px 1.5px at 30px 50px, #fff, rgba(255,255,255,0)),
+        radial-gradient(1.5px 1.5px at 70px 20px, #fff, rgba(255,255,255,0)),
+        radial-gradient(1.5px 1.5px at 120px 140px, #fff, rgba(255,255,255,0));
+      background-repeat: repeat;
+      background-size: 260px 260px;
+      opacity: 0.4;
+      animation: twinkle 8s ease-in-out infinite;
+    }
+    @keyframes twinkle {
+      0%, 100% { opacity: 0.3; }
+      50% { opacity: 0.7; }
+    }
+
+    /* Moon glow */
+    .moon-glow {
+      position: fixed;
+      top: -10%;
+      right: -5%;
+      width: 40vw;
+      height: 40vw;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(154, 214, 255, 0.25), transparent 60%);
+      filter: blur(40px);
+      z-index: 0;
+      pointer-events: none;
+      animation: moonPulse 10s ease-in-out infinite;
+    }
+    @keyframes moonPulse {
+      0%, 100% { opacity: 0.5; transform: scale(1); }
+      50% { opacity: 0.8; transform: scale(1.05); }
+    }
+
+    /* Custom cursor */
+    .cursor {
+      position: fixed;
+      width: 22px;
+      height: 22px;
+      border-radius: 50%;
+      background: radial-gradient(circle at 30% 30%, #fff, var(--aurora-2), var(--aurora-3));
+      box-shadow: var(--glow);
+      transform: translate(-50%, -50%);
+      pointer-events: none;
+      z-index: 9999;
+      mix-blend-mode: screen;
+    }
+    .trail {
+      position: fixed;
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      background: radial-gradient(circle, var(--aurora-2), transparent 70%);
+      box-shadow: 0 0 10px var(--aurora-2), 0 0 20px var(--aurora-3);
+      transform: translate(-50%, -50%);
+      pointer-events: none;
+      z-index: 9998;
+      opacity: 0.8;
+      transition: opacity 0.4s ease, transform 0.2s ease;
+    }
+
+    /* Content */
+    .content {
+      position: relative;
+      z-index: 2;
+      max-width: 1000px;
+      margin: 40px auto 80px;
+      padding: 28px 20px 60px;
+    }
+
+    .header-card {
+      background: var(--card-bg);
+      border: 1px solid var(--card-border);
+      border-radius: 20px;
+      padding: 28px 20px 22px;
+      text-align: center;
+      backdrop-filter: blur(8px);
+      box-shadow: var(--glow);
+      margin-bottom: 28px;
+    }
+
+    .name {
+      font-size: 2.2rem;
+      font-weight: 800;
+      letter-spacing: 0.5px;
+      color: #f4f8ff;
+      text-shadow: 0 0 18px rgba(154, 214, 255, 0.6);
+    }
+
+    .tagline {
+      margin-top: 8px;
+      font-size: 1rem;
+      color: var(--text-muted);
+    }
+
+    .section {
+      background: var(--card-bg);
+      border: 1px solid var(--card-border);
+      border-radius: 18px;
+      padding: 22px 18px;
+      margin-bottom: 22px;
+      backdrop-filter: blur(8px);
+      box-shadow: 0 0 0 1px rgba(154, 214, 255, 0.06) inset,
+                  0 10px 40px rgba(0,0,0,0.5);
+    }
+
+    .section h2 {
+      font-size: 1.35rem;
+      margin-bottom: 12px;
+      color: #f0f6ff;
+      text-shadow: 0 0 14px rgba(154, 214, 255, 0.45);
+    }
+
+    .section p, .section li {
+      line-height: 1.6;
+      color: var(--text-muted);
+    }
+
+    .section a {
+      color: var(--aurora-1);
+      text-decoration: none;
+      border-bottom: 1px dashed rgba(154, 214, 255, 0.5);
+    }
+    .section a:hover {
+      border-bottom-style: solid;
+      text-shadow: 0 0 10px rgba(154, 214, 255, 0.6);
+    }
+
+    .skills-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-top: 10px;
+    }
+
+    .skill-chip {
+      background: rgba(15, 42, 58, 0.7);
+      border: 1px solid rgba(154, 214, 255, 0.25);
+      border-radius: 999px;
+      padding: 6px 12px;
+      font-size: 0.85rem;
+      color: #d8e9ff;
+      box-shadow: 0 0 10px rgba(154, 214, 255, 0.2);
+    }
+
+    .projects-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 16px;
+      margin-top: 10px;
+    }
+
+    .project-card {
+      background: rgba(2, 4, 10, 0.55);
+      border: 1px solid rgba(154, 214, 255, 0.18);
+      border-radius: 14px;
+      padding: 14px;
+      box-shadow: 0 8px 24px rgba(0,0,0,0.45);
+    }
+
+    .project-card h3 {
+      font-size: 1.05rem;
+      color: #eaf4ff;
+      margin-bottom: 6px;
+    }
+
+    .project-card p {
+      font-size: 0.9rem;
+      color: var(--text-muted);
+    }
+
+    .project-tags {
+      margin-top: 8px;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+    }
+
+    .tag {
+      font-size: 0.75rem;
+      padding: 3px 8px;
+      border-radius: 999px;
+      background: rgba(90, 42, 106, 0.35);
+      border: 1px solid rgba(192, 132, 252, 0.35);
+      color: #e9d9ff;
+    }
+
+    .footer-note {
+      text-align: center;
+      font-size: 0.9rem;
+      color: var(--text-muted);
+      margin-top: 18px;
+    }
+
+    @media (max-width: 600px) {
+      .name { font-size: 1.6rem; }
+      .header-card { padding: 20px 14px 16px; }
+      .section { padding: 16px 12px; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Aurora Sky Background -->
+  <div class="aurora-sky">
+    <div class="aurora-layer"></div>
+    <div class="aurora-layer"></div>
+    <div class="aurora-layer"></div>
+  </div>
+
+  <div class="stars"></div>
+  <div class="stars2"></div>
+  <div class="moon-glow"></div>
+
+  <!-- Custom Cursor -->
+  <div class="cursor" id="cursor"></div>
+
+  <!-- Content -->
+  <div class="content">
+
+    <div class="header-card">
+      <div class="name">Pratigya Kaushik</div>
+      <div class="tagline">
+        💻 Developer • 🤖 IoT Explorer • ✍️ Writer
+      </div>
+      <div style="margin-top:10px; font-size:0.9rem; color:#b9c7e6;">
+        Turning ideas into code, one step at a time. 🪽
+      </div>
+    </div>
+
+    <div class="section">
+      <h2>✦ About Me</h2>
+      <p>
+        I move between three disciplines most people treat as separate —
+        <strong>writing, development, and IoT</strong> — and let each sharpen the other.
+      </p>
+      <p>
+        Writing taught me <strong>structure and clarity</strong>.
+        Development taught me <strong>logic and precision</strong>.
+        IoT taught me how <strong>software and hardware can work together</strong>
+        to turn ideas into real-world solutions.
+      </p>
+      <p style="margin-top:10px; font-style:italic; color:#d8e9ff;">
+        “Structure in sentences. Logic in syntax. Circuits in between.”
+      </p>
+      <ul style="margin-top:10px; padding-left:18px;">
+        <li>💻 Building with <strong>C & Python</strong></li>
+        <li>🤖 Exploring <strong>IoT & Embedded Systems</strong></li>
+        <li>🌡️ Working with <strong>Sensors & ThingWorx</strong></li>
+        <li>👁️ Experimenting with <strong>OpenCV & computer vision</strong></li>
+        <li>🧠 Practicing <strong>DSA & Problem Solving</strong></li>
+        <li>✍️ Interested in <strong>Writing & Creative Ideas</strong></li>
+        <li>🌱 Learning something new every day</li>
+      </ul>
+    </div>
+
+    <div class="section">
+      <h2>🧰 Tech Stack</h2>
+      <div class="skills-row">
+        <span class="skill-chip">C</span>
+        <span class="skill-chip">Python</span>
+        <span class="skill-chip">OpenCV</span>
+        <span class="skill-chip">Arduino</span>
+        <span class="skill-chip">HTML5</span>
+        <span class="skill-chip">CSS3</span>
+        <span class="skill-chip">JavaScript</span>
+        <span class="skill-chip">Bootstrap</span>
+        <span class="skill-chip">Tailwind CSS</span>
+        <span class="skill-chip">Git</span>
+        <span class="skill-chip">IoT</span>
+        <span class="skill-chip">ThingWorx</span>
+        <span class="skill-chip">DSA</span>
+      </div>
+    </div>
+
+    <div class="section">
+      <h2>🛠️ Featured Projects</h2>
+      <div class="projects-grid">
+
+        <div class="project-card">
+          <h3>🦌 WildGuard — Wildlife Monitoring Dashboard</h3>
+          <p>
+            Wildlife monitoring prototype with Arduino UNO Q, Python, and OpenCV.
+            Detects motion, tracks camera orientation with MPU6050, and shows live dashboard.
+          </p>
+          <div class="project-tags">
+            <span class="tag">Arduino UNO Q</span>
+            <span class="tag">Python</span>
+            <span class="tag">OpenCV</span>
+            <span class="tag">MPU6050</span>
+            <span class="tag">JavaScript</span>
+          </div>
+        </div>
+
+        <div class="project-card">
+          <h3>🧠 Noteforge.ai</h3>
+          <p>
+            AI-powered web app for intelligent meeting management and note analysis.
+            Explores frontend architecture, UI/UX, and AI integration.
+          </p>
+          <div class="project-tags">
+            <span class="tag">HTML</span>
+            <span class="tag">CSS</span>
+            <span class="tag">JavaScript</span>
+            <span class="tag">Bootstrap</span>
+            <span class="tag">Tailwind</span>
+          </div>
+        </div>
+
+        <div class="project-card">
+          <h3>🧮 DSA</h3>
+          <p>
+            Collection of data structures and algorithms in C to build problem-solving fundamentals.
+          </p>
+          <div class="project-tags">
+            <span class="tag">C</span>
+            <span class="tag">Algorithms</span>
+            <span class="tag">Data Structures</span>
+          </div>
+        </div>
+
+        <div class="project-card">
+          <h3>🌡️ Environmental Temperature Monitoring</h3>
+          <p>
+            IoT-based ThingWorx project for monitoring temperature and humidity via a dashboard.
+          </p>
+          <div class="project-tags">
+            <span class="tag">IoT</span>
+            <span class="tag">ThingWorx</span>
+            <span class="tag">Sensors</span>
+          </div>
+        </div>
+
+        <div class="project-card">
+          <h3>🔐 RFID Card Detection</h3>
+          <p>
+            Arduino project using MFRC522 RFID reader to detect cards and read unique IDs.
+          </p>
+          <div class="project-tags">
+            <span class="tag">Arduino</span>
+            <span class="tag">RFID</span>
+            <span class="tag">MFRC522</span>
+            <span class="tag">SPI</span>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <div class="section">
+      <h2>🤝 Let's Connect</h2>
+      <p>
+        <a href="https://github.com/kaushikpratigya37-crypto" target="_blank">
+          GitHub — @kaushikpratigya37-crypto
+        </a>
+      </p>
+      <!-- Add more links here when ready:
+      <p>
+        <a href="https://www.linkedin.com/in/YOUR-ID" target="_blank">LinkedIn</a> •
+        <a href="mailto:YOUR-EMAIL">Email</a>
+      </p>
+      -->
+      <div class="footer-note">
+        🌙 Thanks for visiting! 🌌✨  
+        Always Learning • Always Building 🕊️
+      </div>
+    </div>
+
+  </div>
+
+  <script>
+    const cursor = document.getElementById('cursor');
+    const trails = [];
+
+    function createTrail(x, y) {
+      const t = document.createElement('div');
+      t.className = 'trail';
+      t.style.left = x + 'px';
+      t.style.top = y + 'px';
+      document.body.appendChild(t);
+      trails.push({ el: t, life: 1 });
+    }
+
+    let frame = 0;
+    document.addEventListener('mousemove', (e) => {
+      const x = e.clientX;
+      const y = e.clientY;
+      cursor.style.left = x + 'px';
+      cursor.style.top = y + 'px';
+
+      if (frame % 3 === 0) {
+        createTrail(x, y);
+      }
+      frame++;
+    });
+
+    function animate() {
+      for (let i = trails.length - 1; i >= 0; i--) {
+        const t = trails[i];
+        t.life -= 0.04;
+        t.el.style.opacity = t.life;
+        t.el.style.transform = `translate(-50%, -50%) scale(${0.6 + 0.4 * t.life})`;
+        if (t.life <= 0) {
+          t.el.remove();
+          trails.splice(i, 1);
+        }
+      }
+      requestAnimationFrame(animate);
+    }
+    animate();
+  </script>
+</body>
+</html>
